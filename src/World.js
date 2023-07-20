@@ -11,13 +11,12 @@ export default class World {
 
     this.resources = this.experience.resources;
 
-    this.lighting = new Lighting();
-
     // Wait for resources
     this.resources.on('ready', () => {
       this.imagePlane = new ImagePlane();
       this.thomasHelmet = new ThomasHelmet();
       this.nameText = new NameText();
+      this.lighting = new Lighting();
 
       this.init()
     });

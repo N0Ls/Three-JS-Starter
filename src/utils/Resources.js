@@ -28,6 +28,7 @@ export default class Resources extends EventEmitter
         this.loaders.textureLoader = new THREE.TextureLoader()
         this.loaders.gltfLoader = new GLTFLoader()
         this.loaders.fontLoader = new FontLoader()
+        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
     }
 
     startLoading()
@@ -68,6 +69,16 @@ export default class Resources extends EventEmitter
                     },
                     ( err ) => {
                         console.log( 'An error happened' + err );
+                    }
+                )
+            }
+            else if(source.type === 'cubeTexture')
+            {
+                this.loaders.cubeTextureLoader.load(
+                    source.path,
+                    (file) =>
+                    {
+                        this.sourceLoaded(source, file)
                     }
                 )
             }
