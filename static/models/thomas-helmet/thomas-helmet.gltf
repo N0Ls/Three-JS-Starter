@@ -3,6 +3,10 @@
         "generator" : "Khronos glTF Blender I/O v3.4.49",
         "version" : "2.0"
     },
+    "extensionsUsed" : [
+        "KHR_materials_specular",
+        "KHR_materials_ior"
+    ],
     "scene" : 0,
     "scenes" : [
         {
@@ -29,6 +33,47 @@
             ]
         }
     ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "extensions" : {
+                "KHR_materials_specular" : {
+                    "specularColorFactor" : [
+                        0.7880858989699332,
+                        0.7880858989699332,
+                        0.7880858989699332
+                    ]
+                },
+                "KHR_materials_ior" : {
+                    "ior" : 1.4500000476837158
+                }
+            },
+            "name" : "Chrome",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.7167882323265076,
+                    0.7167882323265076,
+                    0.7167882323265076,
+                    1
+                ],
+                "roughnessFactor" : 0.14071854948997498
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "Visor",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.00393568305298686,
+                    0.00393568305298686,
+                    0.00393568305298686,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.11676645278930664
+            }
+        }
+    ],
     "meshes" : [
         {
             "name" : "tb3",
@@ -36,9 +81,20 @@
                 {
                     "attributes" : {
                         "POSITION" : 0,
-                        "NORMAL" : 1
+                        "TEXCOORD_0" : 1,
+                        "NORMAL" : 2
                     },
-                    "indices" : 2
+                    "indices" : 3,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "TEXCOORD_0" : 5,
+                        "NORMAL" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
                 }
             ]
         }
@@ -47,7 +103,7 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 30537,
+            "count" : 30201,
             "max" : [
                 10.75919246673584,
                 13.128714561462402,
@@ -63,39 +119,109 @@
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 30537,
-            "type" : "VEC3"
+            "count" : 30201,
+            "type" : "VEC2"
         },
         {
             "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 30201,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 30570,
+            "count" : 30234,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 336,
+            "max" : [
+                8.67325210571289,
+                -2.6291048526763916,
+                3.7033629417419434
+            ],
+            "min" : [
+                -8.64705753326416,
+                -11.597855567932129,
+                -2.726318836212158
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 336,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 336,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 336,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 366444,
+            "byteLength" : 362412,
             "byteOffset" : 0,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 366444,
-            "byteOffset" : 366444,
+            "byteLength" : 241608,
+            "byteOffset" : 362412,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 61140,
-            "byteOffset" : 732888,
+            "byteLength" : 362412,
+            "byteOffset" : 604020,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 60468,
+            "byteOffset" : 966432,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 4032,
+            "byteOffset" : 1026900,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 2688,
+            "byteOffset" : 1030932,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 4032,
+            "byteOffset" : 1033620,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 672,
+            "byteOffset" : 1037652,
             "target" : 34963
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 794028,
+            "byteLength" : 1038324,
             "uri" : "thomas-helmet.bin"
         }
     ]
