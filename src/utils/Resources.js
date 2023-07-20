@@ -1,6 +1,7 @@
-import EventEmitter from './EventEmitter.js'
 import * as THREE from 'three'
+import EventEmitter from './EventEmitter.js'
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 export default class Resources extends EventEmitter
 {
@@ -25,7 +26,8 @@ export default class Resources extends EventEmitter
     {
         this.loaders = {}
         this.loaders.textureLoader = new THREE.TextureLoader()
-        this.fontLoader = new FontLoader();
+        this.loaders.gltfLoader = new GLTFLoader()
+        this.loaders.fontLoader = new FontLoader()
     }
 
     startLoading()
@@ -43,9 +45,19 @@ export default class Resources extends EventEmitter
                     },
                 )
             }
+            else if(source.type === 'gltfModel')
+            {
+                this.loaders.gltfLoader.load(
+                    source.path,
+                    (file) =>
+                    {
+                        this.sourceLoaded(source, file)
+                    }
+                )
+            }
             else if(source.type === 'font')
             {
-                this.fontLoader.load(
+                this.loaders.fontLoader.load(
                     source.path.default,
                     (file) =>
                     {
