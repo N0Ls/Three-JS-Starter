@@ -24,6 +24,7 @@ export default class World {
 
   init() {
     this.imagePlane.init();
+    this.nameText.init();
     this.thomasHelmet.init();
   }
 

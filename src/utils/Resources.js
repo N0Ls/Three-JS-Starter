@@ -59,7 +59,7 @@ export default class Resources extends EventEmitter
             else if(source.type === 'font')
             {
                 this.loaders.fontLoader.load(
-                    source.path.default,
+                    source.path,
                     (file) =>
                     {
                       this.sourceLoaded(source, file)

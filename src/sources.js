@@ -10,6 +10,11 @@ export default [
     path: './models/thomas-helmet/thomas-helmet.gltf'
   },
   {
+    name: 'nameFont',
+    type: 'font',
+    path : './fonts/Montserrat_Bold.json'
+  },
+  {
     name: 'environmentMapTexture',
     type: 'cubeTexture',
     path:
@@ -21,5 +26,5 @@ export default [
         './textures/environmentMap/pz.jpg',
         './textures/environmentMap/nz.jpg'
     ]
-}
+  },
 ];
