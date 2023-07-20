@@ -47,23 +47,23 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 30541,
+            "count" : 30537,
             "max" : [
-                10.75,
-                10.492188453674316,
-                2.306641101837158
+                10.75919246673584,
+                13.128714561462402,
+                10.088130950927734
             ],
             "min" : [
-                -10.75,
-                -14.687501907348633,
-                -19.96875
+                -10.74080753326416,
+                -12.050975799560547,
+                -12.187259674072266
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 30541,
+            "count" : 30537,
             "type" : "VEC3"
         },
         {
@@ -76,26 +76,26 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 366492,
+            "byteLength" : 366444,
             "byteOffset" : 0,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 366492,
-            "byteOffset" : 366492,
+            "byteLength" : 366444,
+            "byteOffset" : 366444,
             "target" : 34962
         },
         {
             "buffer" : 0,
             "byteLength" : 61140,
-            "byteOffset" : 732984,
+            "byteOffset" : 732888,
             "target" : 34963
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 794124,
+            "byteLength" : 794028,
             "uri" : "thomas-helmet.bin"
         }
     ]

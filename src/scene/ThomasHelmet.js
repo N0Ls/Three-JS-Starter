@@ -23,7 +23,8 @@ export default class ThomasHelmet
     setModel()
     {
         this.model = this.resource.scene
-        //this.model.scale.set(0.02, 0.02, 0.02)
+        this.model.scale.set(0.5, 0.5, 0.5)
+        this.model.rotation.y = Math.PI
         this.scene.add(this.model)
     }
 }
