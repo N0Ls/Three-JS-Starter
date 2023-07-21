@@ -1,6 +1,7 @@
 uniform sampler2D tTexture;
 
 varying vec2 vUv;
+varying vec3 vPos;
 
 void main()
 {

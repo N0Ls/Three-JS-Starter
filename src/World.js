@@ -14,7 +14,7 @@ export default class World {
     // Wait for resources
     this.resources.on('ready', () => {
       this.imagePlane = new ImagePlane();
-      this.thomasHelmet = new ThomasHelmet();
+      //this.thomasHelmet = new ThomasHelmet();
       this.nameText = new NameText();
       this.lighting = new Lighting();
 
@@ -25,7 +25,7 @@ export default class World {
   init() {
     this.imagePlane.init();
     this.nameText.init();
-    this.thomasHelmet.init();
+    //this.thomasHelmet.init();
   }
 
 }
