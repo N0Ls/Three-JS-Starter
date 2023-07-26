@@ -1,15 +1,15 @@
-import * as THREE from 'three';
-import * as dat from 'lil-gui';
+import * as THREE from "three";
+import * as dat from "lil-gui";
 
 
-import World from './World.js';
-import Camera from './Camera.js';
-import Time from './utils/Time.js';
-import Sizes from './utils/Sizes.js';
-import Renderer from './Renderer.js';
-import Resources from './utils/Resources.js';
+import World from "./World.js";
+import Camera from "./Camera.js";
+import Time from "./utils/Time.js";
+import Sizes from "./utils/Sizes.js";
+import Renderer from "./Renderer.js";
+import Resources from "./utils/Resources.js";
 
-import sources from './sources.js';
+import sources from "./sources.js";
 
 let instance = null;
 
@@ -40,12 +40,12 @@ export default class Experience {
         this.namePoster = null;
 
         // Resize event
-        this.sizes.on('resize', () => {
+        this.sizes.on("resize", () => {
             this.resize();
         });
 
         // Time tick event
-        this.time.on('tick', () => {
+        this.time.on("tick", () => {
             this.update();
         });
     }
@@ -87,8 +87,8 @@ export default class Experience {
     }
 
     destroy() {
-        this.sizes.off('resize')
-        this.time.off('tick')
+        this.sizes.off("resize");
+        this.time.off("tick");
 
         this.renderer.destroy();
 
@@ -97,28 +97,28 @@ export default class Experience {
             // Test if it's a mesh
             if(child instanceof THREE.Mesh)
             {
-                child.geometry.dispose()
+                child.geometry.dispose();
 
                 // Loop through the material properties
                 for(const key in child.material)
                 {
-                    const value = child.material[key]
+                    const value = child.material[key];
 
                     // Test if there is a dispose function
-                    if(value && typeof value.dispose === 'function')
+                    if(value && typeof value.dispose === "function")
                     {
-                        value.dispose()
+                        value.dispose();
                     }
                 }
             }
-        })
+        });
 
         instance = null;
 
         const isDebug = true;
         if(isDebug) {
             if(this.gui.active)
-                this.gui.ui.destroy()
+                this.gui.ui.destroy();
         }
     }
 

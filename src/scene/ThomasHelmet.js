@@ -1,30 +1,26 @@
-import * as THREE from 'three';
-import Experience from '../Experience.js'
-
-import basicVertexShader from '../shaders/basic/basic.vert'
-import basicFragmentShader from '../shaders/basic/basic.frag'
+import Experience from "../Experience.js";
 
 export default class ThomasHelmet
 {
     constructor()
     {
-        this.experience = new Experience()
-        this.scene = this.experience.scene
-        this.resources = this.experience.resources
-        this.resource = this.resources.items.thomasHelmet
-        this.sizes = this.experience.sizes
+        this.experience = new Experience();
+        this.scene = this.experience.scene;
+        this.resources = this.experience.resources;
+        this.resource = this.resources.items.thomasHelmet;
+        this.sizes = this.experience.sizes;
 
     }
 
     init(){
-        this.setModel()
+        this.setModel();
     }
 
     setModel()
     {
-        this.model = this.resource.scene
-        this.model.scale.set(0.5, 0.5, 0.5)
-        this.model.rotation.y = Math.PI
-        this.scene.add(this.model)
+        this.model = this.resource.scene;
+        this.model.scale.set(0.5, 0.5, 0.5);
+        this.model.rotation.y = Math.PI;
+        this.scene.add(this.model);
     }
 }

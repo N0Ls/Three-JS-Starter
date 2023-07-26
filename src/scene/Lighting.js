@@ -1,37 +1,37 @@
-import * as THREE from 'three'
-import Experience from '../Experience.js'
+import * as THREE from "three";
+import Experience from "../Experience.js";
 
 export default class Lighting
 {
     constructor()
     {
-        this.experience = new Experience()
-        this.scene = this.experience.scene
-        this.resources = this.experience.resources
+        this.experience = new Experience();
+        this.scene = this.experience.scene;
+        this.resources = this.experience.resources;
 
         // Setup
-        this.setSunLight()
-        this.setEnvironmentMap()
+        this.setSunLight();
+        this.setEnvironmentMap();
     }
 
     setSunLight()
     {
-        this.sunLight = new THREE.DirectionalLight('#ffffff', 3)
-        this.sunLight.castShadow = true
-        this.sunLight.shadow.camera.far = 15
-        this.sunLight.shadow.mapSize.set(1024, 1024)
-        this.sunLight.shadow.normalBias = 0.05
-        this.sunLight.position.set(3, 3, 2.25)
-        this.scene.add(this.sunLight)
+        this.sunLight = new THREE.DirectionalLight("#ffffff", 3);
+        this.sunLight.castShadow = true;
+        this.sunLight.shadow.camera.far = 15;
+        this.sunLight.shadow.mapSize.set(1024, 1024);
+        this.sunLight.shadow.normalBias = 0.05;
+        this.sunLight.position.set(3, 3, 2.25);
+        this.scene.add(this.sunLight);
     }
     setEnvironmentMap()
     {
-        this.environmentMap = {}
-        this.environmentMap.intensity = 0.6
-        this.environmentMap.texture = this.resources.items.environmentMapTexture
-        this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace
+        this.environmentMap = {};
+        this.environmentMap.intensity = 0.6;
+        this.environmentMap.texture = this.resources.items.environmentMapTexture;
+        this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace;
         
-        this.scene.environment = this.environmentMap.texture
+        this.scene.environment = this.environmentMap.texture;
 
         this.environmentMap.updateMaterials = () =>
         {
@@ -39,13 +39,13 @@ export default class Lighting
             {
                 if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
                 {
-                    child.material.envMap = this.environmentMap.texture
-                    child.material.envMapIntensity = this.environmentMap.intensity
-                    child.material.needsUpdate = true
+                    child.material.envMap = this.environmentMap.texture;
+                    child.material.envMapIntensity = this.environmentMap.intensity;
+                    child.material.needsUpdate = true;
                 }
-            })
-        }
-        this.environmentMap.updateMaterials()
+            });
+        };
+        this.environmentMap.updateMaterials();
     }
     
 }
