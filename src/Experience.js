@@ -8,6 +8,7 @@ import Time from "./utils/Time.js";
 import Sizes from "./utils/Sizes.js";
 import Renderer from "./Renderer.js";
 import Resources from "./utils/Resources.js";
+import PostProcessing from "./PostProcessing.js";
 
 import sources from "./sources.js";
 
@@ -30,6 +31,7 @@ export default class Experience {
         this.scene = new THREE.Scene();
         this.camera = new Camera();
         this.renderer = new Renderer();
+        //this.postProcessing = new PostProcessing();
 
         this.resources = new Resources(sources);
 
@@ -53,11 +55,13 @@ export default class Experience {
     resize() {
         this.camera.resize();
         this.renderer.resize();
+        //this.postProcessing.resize();
     }
 
     update() {
         this.camera.update();
         this.renderer.update();
+        //this.postProcessing.update();
     }
 
     init() {
