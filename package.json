@@ -10,6 +10,7 @@
   "devDependencies": {
     "@vitejs/plugin-basic-ssl": "^1.0.1",
     "eslint": "^8.45.0",
+    "stats-gl": "^1.0.4",
     "vite": "^4.0.4"
   },
   "dependencies": {

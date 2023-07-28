@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import * as dat from "lil-gui";
+import Stats from "stats-gl";
 
 
 import World from "./World.js";
@@ -69,6 +70,7 @@ export default class Experience {
         const isDebug = true;
         if(isDebug) {
             this.initGUI();
+            this.initStats();
         }
     }
 
@@ -83,6 +85,33 @@ export default class Experience {
         this.gui.add(functionButton, "doSomething").name("Function Button");
 
         this.gui.close();
+
+    }
+
+    initStats() {
+        const container = document.getElementById( "container" );
+
+        this.stats = new Stats({
+            logsPerSecond: 20, 
+            samplesLog: 100, 
+            samplesGraph: 10, 
+            precision: 2, 
+            horizontal: true,
+            minimal: false, 
+            mode: 0 
+        });
+
+        container.appendChild( this.stats.container );
+
+        this.stats.init(this.renderer.instance.domElement);
+
+        this.scene.onBeforeRender = () => {
+            this.stats.begin();
+        };
+
+        this.scene.onAfterRender = () => {
+            this.stats.end();
+        };
 
     }
 
