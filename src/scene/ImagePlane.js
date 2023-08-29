@@ -8,7 +8,7 @@ export default class ImagePlane
 {
     constructor()
     {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();;
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.sizes = this.experience.sizes;

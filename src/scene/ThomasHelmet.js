@@ -4,7 +4,7 @@ export default class ThomasHelmet
 {
     constructor()
     {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();;
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.resource = this.resources.items.thomasHelmet;

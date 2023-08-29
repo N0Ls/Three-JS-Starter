@@ -7,7 +7,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 export default class NameText {
     constructor() {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();;
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.sizes = this.experience.sizes;

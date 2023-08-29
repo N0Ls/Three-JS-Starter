@@ -13,18 +13,26 @@ import PostProcessing from "./PostProcessing.js";
 
 import sources from "./sources.js";
 
-let instance = null;
-
 export default class Experience {
-    constructor(canvas) {
-        // Singleton
-        if (instance) {
-            return instance;
+    static instance = null;
+
+    static getInstance() {
+        if (!Experience.instance) {
+            Experience.instance = new Experience();
         }
-        instance = this;
+        return Experience.instance;
+    }
+
+    constructor() {
+        // Singleton
+        if (Experience.instance) {
+            return Experience.instance;
+        }
+        Experience.instance = this;
         window.experience = this;
 
         // Variables
+        const canvas = document.querySelector("canvas");
         this.canvas = canvas;
         this.sizes = new Sizes();
         this.time = new Time();
@@ -146,7 +154,7 @@ export default class Experience {
             }
         });
 
-        instance = null;
+        Experience.instance = null;
 
         const isDebug = true;
         if(isDebug) {

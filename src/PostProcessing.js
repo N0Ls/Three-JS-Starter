@@ -13,7 +13,7 @@ import dotScreenFragmentShader from "./shaders/dotScreen/dotScreen.frag";
 
 export default class PostProcessing {
     constructor() {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();;
         this.canvas = this.experience.canvas;
         this.sizes = this.experience.sizes;
         this.scene = this.experience.scene;

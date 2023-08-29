@@ -4,8 +4,7 @@ export default class App {
     
     constructor({ canvas }) {
         this.canvas = canvas;
-
-        this.experience = new Experience(this.canvas);
+        this.experience = new Experience();
     }
   
     destroy() {

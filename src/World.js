@@ -6,7 +6,7 @@ import ThomasHelmet from "./scene/ThomasHelmet.js";
 
 export default class World {
     constructor() {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
 
         this.resources = this.experience.resources;
