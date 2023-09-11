@@ -2,8 +2,15 @@ import * as THREE from "three";
 import Experience from "./Experience.js";
 
 export default class Renderer {
+    experience: Experience;
+    canvas: HTMLCanvasElement | null;
+    sizes: any;
+    scene: THREE.Scene;
+    camera: any;
+
+    instance: THREE.WebGLRenderer;
     constructor() {
-        this.experience = Experience.getInstance();;
+        this.experience = Experience.getInstance();
         this.canvas = this.experience.canvas;
         this.sizes = this.experience.sizes;
         this.scene = this.experience.scene;
@@ -14,7 +21,7 @@ export default class Renderer {
 
     setInstance() {
         this.instance = new THREE.WebGLRenderer({
-            canvas: this.canvas,
+            canvas: this.canvas!,
             antialias: true,
         });
 
@@ -22,8 +29,8 @@ export default class Renderer {
         this.instance.setSize(this.sizes.width, this.sizes.height);
         this.instance.setPixelRatio(this.sizes.pixelRatio);
         this.instance.setClearColor(0x000000, 1);
-        this.instance.gammaOutput = true;
-        this.instance.gammaFactor = 2.2;
+        // this.instance.gammaOutput = true;
+        // this.instance.gammaFactor = 2.2;
         this.instance.outputColorSpace = THREE.SRGBColorSpace;
     }
 

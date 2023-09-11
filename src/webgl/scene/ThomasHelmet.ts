@@ -1,10 +1,18 @@
+import * as THREE from "three";
 import Experience from "../Experience.js";
 
 export default class ThomasHelmet
 {
+    experience: Experience;
+    scene: THREE.Scene;
+    resources: any;
+    resource: any;
+    sizes: any;
+
+    model: THREE.Object3D;
     constructor()
     {
-        this.experience = Experience.getInstance();;
+        this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.resource = this.resources.items.thomasHelmet;

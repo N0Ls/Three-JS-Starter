@@ -2,6 +2,11 @@ import EventEmitter from "./EventEmitter.js";
 
 export default class Sizes extends EventEmitter
 {
+    width: number;
+    height: number;
+    pixelRatio: number;
+    aspectRatio: number;
+    
     constructor()
     {
         super();

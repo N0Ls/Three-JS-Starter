@@ -9,19 +9,35 @@ import Time from "./utils/Time.js";
 import Sizes from "./utils/Sizes.js";
 import Renderer from "./Renderer.js";
 import Resources from "./utils/Resources.js";
-import PostProcessing from "./PostProcessing.js";
+// import PostProcessing from "./PostProcessing.js";
 
 import sources from "./sources.js";
 
 export default class Experience {
-    static instance = null;
+    instance: Experience | null;
+    static instance;
 
-    static getInstance() {
+    static getInstance () {
         if (!Experience.instance) {
             Experience.instance = new Experience();
         }
         return Experience.instance;
     }
+
+    canvas: HTMLCanvasElement | null;
+    sizes: Sizes;
+    time: Time;
+    scene: THREE.Scene;
+    camera: Camera;
+    renderer: Renderer;
+
+    resources: Resources;
+    world: World;
+
+    gui: dat.GUI;
+    stats: Stats;
+
+    // postProcessing: PostProcessing;
 
     constructor() {
         // Singleton
@@ -40,15 +56,13 @@ export default class Experience {
         this.scene = new THREE.Scene();
         this.camera = new Camera();
         this.renderer = new Renderer();
-        //this.postProcessing = new PostProcessing();
+        // this.postProcessing = new PostProcessing();
 
         this.resources = new Resources(sources);
 
         this.world = new World();
 
         this.init();
-
-        this.namePoster = null;
 
         // Resize event
         this.sizes.on("resize", () => {
@@ -109,9 +123,9 @@ export default class Experience {
             mode: 0 
         });
 
-        container.appendChild( this.stats.container );
+        container?.appendChild( this.stats.container );
 
-        this.stats.init(this.renderer.instance.domElement);
+        this.stats.init(this.renderer.instance?.domElement);
 
         this.scene.onBeforeRender = () => {
             this.stats.begin();

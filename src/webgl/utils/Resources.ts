@@ -1,10 +1,17 @@
 import * as THREE from "three";
 import EventEmitter from "./EventEmitter.js";
+// @ts-ignore: Unreachable code error
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default class Resources extends EventEmitter
 {
+    sources: any;
+    items: any;
+    toLoad: number;
+    loaded: number;
+    loaders: any;
+    
     constructor(sources)
     {
         super();

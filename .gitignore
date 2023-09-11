@@ -3,6 +3,7 @@ node_modules
 /dist
 /.tmp
 /tmp
+/assets/*
 /assets/*/*
 !/assets/.gitkeep
 !/assets/**/*.sh

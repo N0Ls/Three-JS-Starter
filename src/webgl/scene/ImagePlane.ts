@@ -3,12 +3,25 @@ import Experience from "../Experience.js";
 
 import basicVertexShader from "../shaders/basic/basic.vert";
 import basicFragmentShader from "../shaders/basic/basic.frag";
+import Sizes from "../utils/Sizes.js";
 
 export default class ImagePlane
 {
+    experience: Experience;
+    scene: THREE.Scene;
+    resources: any;
+    sizes: Sizes;
+
+    refAspect: number;
+
+    geometry: THREE.PlaneGeometry;
+    texture: THREE.Texture;
+    material: THREE.ShaderMaterial;
+    mesh: THREE.Mesh;
+    
     constructor()
     {
-        this.experience = Experience.getInstance();;
+        this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.sizes = this.experience.sizes;
@@ -32,7 +45,6 @@ export default class ImagePlane
     {
         this.texture = this.resources.items.uvTest;
         this.texture.colorSpace = THREE.LinearSRGBColorSpace;
-        this.texture.SRGBColorSpace = true;
     }
 
     setMaterial()
