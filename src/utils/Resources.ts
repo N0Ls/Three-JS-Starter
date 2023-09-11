@@ -5,6 +5,12 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default class Resources extends EventEmitter
 {
+    sources: any;
+    items: any;
+    toLoad: number;
+    loaded: number;
+    loaders: any;
+    
     constructor(sources)
     {
         super();

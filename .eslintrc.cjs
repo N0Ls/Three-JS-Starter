@@ -17,6 +17,8 @@ module.exports = {
             }
         }
     ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -39,4 +41,4 @@ module.exports = {
             "always"
         ]
     }
-};
+}

@@ -6,8 +6,22 @@ import textFragmentShader from "../shaders/text/text.frag";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 export default class NameText {
+    experience: Experience;
+    scene: THREE.Scene;
+    resources: any;
+    sizes: any;
+    gui: any;
+
+    params: { threeTextColor: THREE.Color; };
+
+    font: any;
+    geometry: TextGeometry;
+    material: THREE.ShaderMaterial;
+    mesh: THREE.Mesh;
+    textShader: { uniforms: { tAlphaTexture: { value: any; }; uColor: { value: THREE.Color; }; }; depthWrite: boolean; transparent: boolean; vertexShader: string; fragmentShader: string; };
+    
     constructor() {
-        this.experience = Experience.getInstance();;
+        this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.sizes = this.experience.sizes;
@@ -62,10 +76,10 @@ export default class NameText {
         const alphaTexture = this.resources.items.textAlphaTexture;
         this.textShader = {
             uniforms:
-      {
-          tAlphaTexture: { value: alphaTexture },
-          uColor : { value: new THREE.Color(0x2e2723).convertLinearToSRGB() },
-      },
+        {
+            tAlphaTexture: { value: alphaTexture },
+            uColor : { value: new THREE.Color(0x2e2723).convertLinearToSRGB() },
+        },
             //blending:THREE.AdditiveBlending,
             depthWrite: false,
             transparent: true,

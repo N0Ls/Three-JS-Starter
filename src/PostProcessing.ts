@@ -12,8 +12,16 @@ import dotScreenVertexShader from "./shaders/dotScreen/dotScreen.vert";
 import dotScreenFragmentShader from "./shaders/dotScreen/dotScreen.frag";
 
 export default class PostProcessing {
+
+    experience: Experience;
+    canvas: HTMLCanvasElement | null;
+    sizes: any;
+    scene: THREE.Scene;
+    camera: any;
+
+    instance: EffectComposer;
     constructor() {
-        this.experience = Experience.getInstance();;
+        this.experience = Experience.getInstance();
         this.canvas = this.experience.canvas;
         this.sizes = this.experience.sizes;
         this.scene = this.experience.scene;
@@ -23,6 +31,7 @@ export default class PostProcessing {
     }
 
     setInstance() {
+
         this.instance = new EffectComposer(this.experience.renderer.instance);
         this.instance.setSize(this.sizes.width, this.sizes.height);
         this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -47,7 +56,7 @@ export default class PostProcessing {
         };
 
         const coloramaPass = new ShaderPass(ColoramaShader);
-        coloramaPass.enabled = false;
+        coloramaPass.enabled = true;
         this.instance.addPass(coloramaPass);
 
         const dotScreenShader = {
@@ -73,8 +82,7 @@ export default class PostProcessing {
     }
 
     update() {
-        this.instance.render(this.scene, this.camera.instance);
-        
+        this.instance.render(); 
     }
 
     destroy() {

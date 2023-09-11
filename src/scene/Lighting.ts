@@ -3,9 +3,16 @@ import Experience from "../Experience.js";
 
 export default class Lighting
 {
+    experience: Experience;
+    scene: THREE.Scene;
+    resources: any;
+
+    sunLight: THREE.DirectionalLight;
+    environmentMap: any;
+    
     constructor()
     {
-        this.experience = Experience.getInstance();;
+        this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
 

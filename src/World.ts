@@ -5,6 +5,16 @@ import ImagePlane from "./scene/ImagePlane.js";
 import ThomasHelmet from "./scene/ThomasHelmet.js";
 
 export default class World {
+    experience: Experience;
+    // eslint-disable-next-line no-undef
+    scene: THREE.Scene;
+
+    resources: any;
+
+    imagePlane: ImagePlane;
+    thomasHelmet: ThomasHelmet;
+    nameText: NameText;
+    lighting: Lighting;
     constructor() {
         this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
@@ -24,7 +34,7 @@ export default class World {
 
     init() {
         this.imagePlane.init();
-        this.nameText.init();
+        this.nameText.init("Hello, I'm Thomas.");
         this.thomasHelmet.init();
     }
 
