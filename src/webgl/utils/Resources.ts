@@ -27,8 +27,6 @@ export default class Resources extends EventEmitter
 
         this.setLoaders();
         this.startLoading();
-
-        console.log(this.toLoad);
     }
 
     setLoaders()
@@ -74,10 +72,10 @@ export default class Resources extends EventEmitter
                         this.sourceLoaded(source, file);
                     },
                     ( xhr ) => {
-                        console.log( ( xhr.loaded / xhr.total * 100 ) + "% loaded" );
+                        // console.log( ( xhr.loaded / xhr.total * 100 ) + "% loaded" );
                     },
                     ( err ) => {
-                        console.log( "An error happened" + err );
+                        // console.log( "An error happened" + err );
                     }
                 );
             }
@@ -108,8 +106,6 @@ export default class Resources extends EventEmitter
         this.items[source.name] = file;
 
         this.loaded++;
-
-        console.log(this.loaded + " / " + this.toLoad);
 
         if(this.loaded === this.toLoad)
         {

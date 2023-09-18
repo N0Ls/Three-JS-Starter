@@ -11,8 +11,6 @@ export default class AudioEngine
     constructor()
     {
         // Setup the new Howl.
-        console.log("SoundEngine constructor");
-
 
         // Change global volume.
         Howler.volume(0.5);
