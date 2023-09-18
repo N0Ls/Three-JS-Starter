@@ -12,6 +12,7 @@ import Resources from "./utils/Resources.js";
 // import PostProcessing from "./PostProcessing.js";
 
 import sources from "./sources.js";
+import AudioEngine from "./AudioEngine.js";
 
 export default class Experience {
     instance: Experience | null;
@@ -33,6 +34,7 @@ export default class Experience {
 
     resources: Resources;
     world: World;
+    audioEngine: AudioEngine;
 
     gui: dat.GUI;
     stats: Stats;
@@ -59,6 +61,8 @@ export default class Experience {
         // this.postProcessing = new PostProcessing();
 
         this.resources = new Resources(sources);
+
+        this.audioEngine = new AudioEngine();
 
         this.world = new World();
 
@@ -170,11 +174,17 @@ export default class Experience {
 
         Experience.instance = null;
 
+        this.audioEngine.destroy();
+
         const isDebug = true;
+
+        // TODO : destroy GUI
         if(isDebug) {
             if(this.gui.active)
                 this.gui.ui.destroy();
         }
+
+        // TODO : destroy Stats
     }
 
 }

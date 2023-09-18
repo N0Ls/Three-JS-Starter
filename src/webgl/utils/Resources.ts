@@ -3,6 +3,7 @@ import EventEmitter from "./EventEmitter.js";
 // @ts-ignore: Unreachable code error
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import {Howl, Howler} from "howler";
 
 export default class Resources extends EventEmitter
 {
@@ -25,8 +26,9 @@ export default class Resources extends EventEmitter
         this.loaded = 0;
 
         this.setLoaders();
-
         this.startLoading();
+
+        console.log(this.toLoad);
     }
 
     setLoaders()
@@ -89,6 +91,15 @@ export default class Resources extends EventEmitter
                     }
                 );
             }
+            else if(source.type === "audio")
+            {
+                const sound = new Howl({
+                    src: [source.path],
+                    onload: () => {
+                        this.sourceLoaded(source, sound);
+                    }
+                });
+            }
         }
     }
 
@@ -97,6 +108,8 @@ export default class Resources extends EventEmitter
         this.items[source.name] = file;
 
         this.loaded++;
+
+        console.log(this.loaded + " / " + this.toLoad);
 
         if(this.loaded === this.toLoad)
         {

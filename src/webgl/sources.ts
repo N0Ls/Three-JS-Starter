@@ -27,4 +27,9 @@ export default [
         "./textures/environmentMap/nz.jpg"
     ]
     },
+    {
+        name: "ambientSound",
+        type: "audio",
+        path: "./sounds/ambient-main.mp3"
+    }
 ];
