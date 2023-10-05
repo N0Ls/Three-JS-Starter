@@ -3,7 +3,7 @@ import EventEmitter from "./EventEmitter.js";
 // @ts-ignore: Unreachable code error
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import {Howl, Howler} from "howler";
+import { Howl } from "howler";
 
 export default class Resources extends EventEmitter
 {
@@ -71,12 +71,12 @@ export default class Resources extends EventEmitter
                     {
                         this.sourceLoaded(source, file);
                     },
-                    ( xhr ) => {
-                        // console.log( ( xhr.loaded / xhr.total * 100 ) + "% loaded" );
-                    },
-                    ( err ) => {
-                        // console.log( "An error happened" + err );
-                    }
+                    // ( xhr ) => {
+                    //     // console.log( ( xhr.loaded / xhr.total * 100 ) + "% loaded" );
+                    // },
+                    // ( err ) => {
+                    //     // console.log( "An error happened" + err );
+                    // }
                 );
             }
             else if(source.type === "cubeTexture")
