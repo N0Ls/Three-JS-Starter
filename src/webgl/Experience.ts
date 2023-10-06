@@ -62,7 +62,7 @@ export default class Experience {
 
         this.resources = new Resources(sources);
 
-        this.audioEngine = new AudioEngine();
+        //this.audioEngine = new AudioEngine();
 
         this.world = new World();
 
@@ -88,11 +88,11 @@ export default class Experience {
     update() {
         this.camera.update();
         this.renderer.update();
+        this.world.update();
         //this.postProcessing.update();
     }
 
     init() {
-
         const isDebug = true;
         if(isDebug) {
             this.initGUI();
@@ -150,6 +150,8 @@ export default class Experience {
         this.time.off("tick");
 
         this.renderer.destroy();
+
+        this.world.destroy();
 
         this.scene.traverse((child) =>
         {

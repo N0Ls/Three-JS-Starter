@@ -3,6 +3,7 @@ import Lighting from "./scene/Lighting.js";
 import NameText from "./scene/NameText.js";
 import ImagePlane from "./scene/ImagePlane.js";
 import ThomasHelmet from "./scene/ThomasHelmet.js";
+import AudioData from "./scene/AudioData.js";
 
 export default class World {
     experience: Experience;
@@ -15,6 +16,8 @@ export default class World {
     thomasHelmet: ThomasHelmet;
     nameText: NameText;
     lighting: Lighting;
+    audioData: AudioData;
+
     constructor() {
         this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
@@ -27,6 +30,7 @@ export default class World {
             this.thomasHelmet = new ThomasHelmet();
             this.nameText = new NameText();
             this.lighting = new Lighting();
+            this.audioData = new AudioData();
 
             this.init();
         });
@@ -36,6 +40,15 @@ export default class World {
         this.imagePlane.init();
         this.nameText.init("Hello, I'm Thomas.");
         this.thomasHelmet.init();
+        this.audioData.init();
+    }
+
+    update() {
+        if(this.audioData) this.audioData.update();
+    }
+
+    destroy() {
+        this.audioData.destroy();
     }
 
 }
