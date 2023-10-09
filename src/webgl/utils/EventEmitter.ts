@@ -1,5 +1,14 @@
+interface Name {
+    name: string;
+    namespace: string;
+    original: string;
+    value: string;
+}
+
 export default class EventEmitter
 {
+    callbacks: any;
+
     constructor()
     {
         this.callbacks = {};
@@ -104,7 +113,7 @@ export default class EventEmitter
         return this;
     }
 
-    trigger(_name, _args)
+    trigger(_name : string , _args : any[] = [])
     {
         // Errors
         if(typeof _name === "undefined" || _name === "")
@@ -179,7 +188,7 @@ export default class EventEmitter
 
     resolveName(name)
     {
-        const newName = {};
+        const newName = {} as Name;
         const parts = name.split(".");
 
         newName.original  = name;
