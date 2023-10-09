@@ -41,7 +41,6 @@ export default class Renderer {
 
     update() {
         this.instance.render(this.scene, this.camera.instance);
-        
     }
 
     destroy() {
