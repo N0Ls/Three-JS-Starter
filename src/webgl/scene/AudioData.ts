@@ -22,9 +22,6 @@ export default class AudioData
     audioAnalyser: AnalyserNode;
     audioData: Uint8Array;
     mediaSource: MediaStreamAudioSourceNode;
-    sound: THREE.Audio;
-    listener: THREE.AudioListener;
-    analyser: THREE.AudioAnalyser;
 
     fftSize: number;
     displayRes: number;
@@ -38,11 +35,8 @@ export default class AudioData
 
         this.audioFile = this.resources.items.testAudio;
 
-        this.listener = new THREE.AudioListener();
-        // this.experience.camera.instance.add( this.listener );
-
-        this.fftSize = 512;
-        this.displayRes = 64;
+        this.fftSize = 128;
+        this.displayRes = 128;
 
         this.audioCtx = new AudioContext();
         this.audioAnalyser = this.audioCtx.createAnalyser();
@@ -50,34 +44,31 @@ export default class AudioData
     }
 
     init(){
-        //this.setAudio();
         this.initMicrophone();
         this.setGeometry();
         this.setMaterial();
         this.setMesh();
     }
 
-    setAudio()
-    {
-        // Create audio source
-        this.sound = new THREE.Audio(this.listener);
-        this.sound.setBuffer( this.audioFile );
-        this.sound.setVolume(0.5);
-        this.sound.setLoop(true);
-        this.sound.play();
-
-        // Add audio analyser
-        this.analyser = new THREE.AudioAnalyser( this.sound, this.fftSize );
-    }
-
     initMicrophone() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
-            navigator.mediaDevices.getUserMedia({ audio: true, video : false }).then((stream) => {
+            const constraints = 
+            { 
+                audio: true,
+                video: false 
+            };
+            navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
 
                 this.mediaSource = this.audioCtx.createMediaStreamSource(stream);
                 this.mediaSource.connect(this.audioAnalyser);
-                // animate();
-                // context.resume();
+
+                // Display sample rate
+                // console.log("Sample rate :", stream.getAudioTracks()[0].getSettings().sampleRate);
+
+                // Display browser capabilities
+                // let track = stream.getAudioTracks()[0];
+                // console.log(track.getCapabilities());
+
             }).catch(function (error) {
 
                 console.error("Unable to access the microphone.", error);
@@ -94,7 +85,7 @@ export default class AudioData
     setGeometry()
     {
         //Basic plane
-        this.geometry = new THREE.PlaneGeometry(4, 4, 1, 1);
+        this.geometry = new THREE.PlaneGeometry(8, 4, 1, 1);
     }
 
     setMaterial()
@@ -126,16 +117,13 @@ export default class AudioData
     updateFFT()
     {
         this.audioData = new Uint8Array(this.audioAnalyser.frequencyBinCount);
-        
         this.audioAnalyser.getByteFrequencyData(this.audioData);
-        
     }
 
     update()
     {
-        this.updateFFT();
         // Update the analyser and the uniforms
-        // this.analyser.getFrequencyData();
+        this.updateFFT();
         this.material.uniforms.tAudioData.value.image.data = this.audioData;
         this.material.uniforms.tAudioData.value.needsUpdate = true;
     }
