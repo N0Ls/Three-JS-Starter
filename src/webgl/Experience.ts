@@ -13,6 +13,7 @@ import Resources from "./utils/Resources.js";
 
 import sources from "./sources.js";
 import AudioEngine from "./AudioEngine.js";
+import AudioAnalyser from "./AudioAnalyser.js";
 
 export default class Experience {
     instance: Experience | null;
@@ -35,6 +36,7 @@ export default class Experience {
     resources: Resources;
     world: World;
     audioEngine: AudioEngine;
+    audioAnalyser: AudioAnalyser;
 
     gui: dat.GUI;
     stats: Stats;
@@ -63,6 +65,7 @@ export default class Experience {
         this.resources = new Resources(sources);
 
         //this.audioEngine = new AudioEngine();
+        this.audioAnalyser = new AudioAnalyser();
 
         this.world = new World();
 
@@ -89,6 +92,7 @@ export default class Experience {
         this.camera.update();
         this.renderer.update();
         this.world.update();
+        this.audioAnalyser.update();
         //this.postProcessing.update();
     }
 
@@ -98,6 +102,7 @@ export default class Experience {
             this.initGUI();
             this.initStats();
         }
+        this.audioAnalyser.init();
     }
 
     initGUI() {
@@ -177,6 +182,7 @@ export default class Experience {
         Experience.instance = null;
 
         this.audioEngine.destroy();
+        this.audioAnalyser.destroy();
 
         const isDebug = true;
 
