@@ -26,6 +26,8 @@ export default class Experience {
         return Experience.instance;
     }
 
+    isDebug: boolean;
+
     canvas: HTMLCanvasElement | null;
     sizes: Sizes;
     time: Time;
@@ -49,7 +51,11 @@ export default class Experience {
             return Experience.instance;
         }
         Experience.instance = this;
+
+        // @ts-ignore
         window.experience = this;
+
+        this.isDebug = true;
 
         // Variables
         const canvas = document.querySelector("canvas");
@@ -97,8 +103,7 @@ export default class Experience {
     }
 
     init() {
-        const isDebug = true;
-        if(isDebug) {
+        if(this.isDebug) {
             this.initGUI();
             this.initStats();
         }
@@ -143,7 +148,6 @@ export default class Experience {
         this.scene.onAfterRender = () => {
             this.stats.end();
         };
-
     }
 
     onDoSomething() {
@@ -184,15 +188,10 @@ export default class Experience {
         this.audioEngine.destroy();
         this.audioAnalyser.destroy();
 
-        const isDebug = true;
-
-        // TODO : destroy GUI
-        if(isDebug) {
-            if(this.gui.active)
-                this.gui.ui.destroy();
+        if(this.isDebug) {
+            if(this.gui)
+                this.gui.destroy();
         }
-
-        // TODO : destroy Stats
     }
 
 }
