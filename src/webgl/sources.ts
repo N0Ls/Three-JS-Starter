@@ -31,5 +31,10 @@ export default [
         name: "ambientSound",
         type: "audio",
         path: "./sounds/ambient-main.mp3"
+    },
+    {
+        name: "testAudio",
+        type: "audioTex",
+        path: "./sounds/ambient-main.mp3"
     }
 ];

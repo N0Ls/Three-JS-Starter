@@ -36,6 +36,7 @@ export default class Resources extends EventEmitter
         this.loaders.gltfLoader = new GLTFLoader();
         this.loaders.fontLoader = new FontLoader();
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader();
+        this.loaders.audioLoader = new THREE.AudioLoader();
     }
 
     startLoading()
@@ -97,6 +98,16 @@ export default class Resources extends EventEmitter
                         this.sourceLoaded(source, sound);
                     }
                 });
+            }
+            else if(source.type === "audioTex")
+            {
+                this.loaders.audioLoader.load(
+                    source.path,
+                    (file) =>
+                    {
+                        this.sourceLoaded(source, file);
+                    }
+                );
             }
         }
     }
