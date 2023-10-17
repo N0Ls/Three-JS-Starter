@@ -1,6 +1,14 @@
 # Three.js Starter
 This is a starter project for creating 3D web applications using [Three.js](https://threejs.org/). It includes a basic setup for a local development server and a build process for creating a production-ready version of the application.
 
+## Features
+- [x] Basic multi-file architecture
+- [x] Typescript 
+- [x] 3D World with mutiple basic examples
+- [x] Post Processing pipeline
+- [x] Microphone input handling
+
+
 ## Setup
 To get started, you'll need to have [Node.js](https://nodejs.org/en/download/) installed on your machine.
 Once you have Node.js installed, you can run the following commands to set up the project:
