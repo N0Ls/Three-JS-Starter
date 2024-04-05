@@ -10,7 +10,15 @@ export default {
     server:
     {
         host: true,
-        open: !isCodeSandbox // Open if it's not a CodeSandbox
+        open: !isCodeSandbox, // Open if it's not a CodeSandbox
+        port: 3000,
+        https: true,
+        strictPort: true,
+        hmr: {
+            host: "localhost",
+            port: 3000,
+            protocol: "wss",
+        },
     },
     build:
     {
