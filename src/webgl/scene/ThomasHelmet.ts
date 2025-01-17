@@ -1,19 +1,23 @@
+import GUI from "lil-gui";
 import * as THREE from "three";
+import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
+import Resources from "../utils/Resources.js";
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default class ThomasHelmet
 {
     experience: Experience;
     scene: THREE.Scene;
-    resources: any;
-    resource: any;
-    sizes: any;
+    resources: Resources;
+    resource: GLTF;
+    sizes: Sizes;
 
     audioData: Uint8Array;
     audioParams: { audioIndex: number };
     audioIndex : number = 0;
 
-    gui: any;
+    gui: GUI;
 
     model: THREE.Object3D;
     constructor()
@@ -59,7 +63,7 @@ export default class ThomasHelmet
         this.model.scale.set( 
             0.1 + bass,
             0.1 + bass,
-            0.1 + bass
+            0.1 + bass,
         );
 
     }

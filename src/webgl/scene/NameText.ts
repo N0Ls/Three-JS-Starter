@@ -1,16 +1,19 @@
+import GUI from "lil-gui";
 import * as THREE from "three";
+import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
+import Resources from "../utils/Resources.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 import textVertexShader from "../shaders/text/text.vert";
 import textFragmentShader from "../shaders/text/text.frag";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 export default class NameText {
     experience: Experience;
     scene: THREE.Scene;
-    resources: any;
-    sizes: any;
-    gui: any;
+    resources: Resources;
+    sizes: Sizes;
+    gui: GUI;
 
     params: { threeTextColor: THREE.Color; };
 
@@ -62,9 +65,9 @@ export default class NameText {
             {
                 font: this.font,
                 size: fontSize * sizeFactor,
-                height: 0.01,
+                depth: 0.01,
                 curveSegments: 12,
-            }
+            },
         );
         this.geometry.center(); 
     }
@@ -84,7 +87,7 @@ export default class NameText {
             depthWrite: false,
             transparent: true,
             vertexShader: textVertexShader,
-            fragmentShader: textFragmentShader
+            fragmentShader: textFragmentShader,
         };
 
         this.material = new THREE.ShaderMaterial(this.textShader);

@@ -33,7 +33,7 @@ export default class AudioAnalyser {
             const constraints = 
             { 
                 audio: true,
-                video: false 
+                video: false, 
             };
             navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
 

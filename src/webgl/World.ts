@@ -1,6 +1,8 @@
+import * as THREE from "three";
 import Experience from "./Experience.js";
 import Lighting from "./scene/Lighting.js";
 import NameText from "./scene/NameText.js";
+import Resources from "./utils/Resources.js";
 import ImagePlane from "./scene/ImagePlane.js";
 import ThomasHelmet from "./scene/ThomasHelmet.js";
 import AudioSpectrum from "./scene/AudioSpectrum.js";
@@ -10,7 +12,7 @@ export default class World {
     // eslint-disable-next-line no-undef
     scene: THREE.Scene;
 
-    resources: any;
+    resources: Resources;
 
     imagePlane: ImagePlane;
     thomasHelmet: ThomasHelmet;

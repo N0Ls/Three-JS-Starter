@@ -1,15 +1,16 @@
 import * as THREE from "three";
+import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
+import Resources from "../utils/Resources.js";
 
 import basicVertexShader from "../shaders/basic/basic.vert";
 import basicFragmentShader from "../shaders/basic/basic.frag";
-import Sizes from "../utils/Sizes.js";
 
 export default class ImagePlane
 {
     experience: Experience;
     scene: THREE.Scene;
-    resources: any;
+    resources: Resources;
     sizes: Sizes;
 
     refAspect: number;

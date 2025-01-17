@@ -1,11 +1,12 @@
 import {Howl, Howler} from "howler";
 import Experience from "./Experience";
+import Resources from "./utils/Resources";
 
 export default class AudioEngine
 {
 
     experience: Experience;
-    resources: any;
+    resources: Resources;
     sound: Howl;
 
     constructor()
@@ -21,7 +22,7 @@ export default class AudioEngine
 
         // Wait for resources
         this.resources.on("ready", () => {
-            this.init();
+                this.init();
         });
     }
 
@@ -33,8 +34,8 @@ export default class AudioEngine
 
     destroy()
     {
-        this.sound.stop();
-        
+        // this.sound.stop();
+        this.sound.unload();
     }
 }
 

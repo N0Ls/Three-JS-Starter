@@ -18,7 +18,7 @@ export default class App {
 }
 
 const canvas = document.querySelector("canvas");
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line 
 const app = new App({
-    canvas
+    canvas,
 });

@@ -52,7 +52,7 @@ export default class Experience {
         }
         Experience.instance = this;
 
-        // @ts-ignore
+        // @ts-expect-error Singleton
         window.experience = this;
 
         this.isDebug = true;
@@ -134,7 +134,7 @@ export default class Experience {
             precision: 2, 
             horizontal: true,
             minimal: false, 
-            mode: 0 
+            mode: 0, 
         });
 
         container?.appendChild( this.stats.container );

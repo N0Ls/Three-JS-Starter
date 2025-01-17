@@ -1,15 +1,17 @@
 import * as THREE from "three";
+import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
+import Resources from "../utils/Resources.js";
+import AudioAnalyser from "../AudioAnalyser.js";
 
 import basicVertexShader from "../shaders/basic/basic.vert";
 import audioDataFragmentShader from "../shaders/audioData/audioData.frag";
-import Sizes from "../utils/Sizes.js";
 
 export default class AudioData
 {
     experience: Experience;
     scene: THREE.Scene;
-    resources: any;
+    resources: Resources;
     sizes: Sizes;
 
     geometry: THREE.PlaneGeometry;
@@ -18,7 +20,7 @@ export default class AudioData
     mesh: THREE.Mesh;
 
     audioFile: any;
-    audioAnalyser: any;
+    audioAnalyser: AudioAnalyser;
     
     constructor()
     {
@@ -51,7 +53,7 @@ export default class AudioData
 
         // Uniforms object
         const uniforms = {
-            tAudioData: { value: new THREE.DataTexture(this.audioAnalyser.audioData, this.audioAnalyser.displayRes / 2, 1, format ) }
+            tAudioData: { value: new THREE.DataTexture(this.audioAnalyser.audioData, this.audioAnalyser.displayRes / 2, 1, format ) },
         };
 
         this.material = new THREE.ShaderMaterial({

@@ -1,17 +1,22 @@
 import * as THREE from "three";
 import EventEmitter from "./EventEmitter.js";
-// @ts-ignore: Unreachable code error
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { Howl } from "howler";
 
 export default class Resources extends EventEmitter
 {
-    sources: any;
+    sources: { type: string, path: string, name: string }[];
     items: any;
     toLoad: number;
     loaded: number;
-    loaders: any;
+    loaders: {
+        textureLoader: THREE.TextureLoader,
+        gltfLoader: GLTFLoader,
+        fontLoader: FontLoader,
+        cubeTextureLoader: THREE.CubeTextureLoader,
+        audioLoader: THREE.AudioLoader
+    };
     
     constructor(sources)
     {
@@ -31,12 +36,13 @@ export default class Resources extends EventEmitter
 
     setLoaders()
     {
-        this.loaders = {};
-        this.loaders.textureLoader = new THREE.TextureLoader();
-        this.loaders.gltfLoader = new GLTFLoader();
-        this.loaders.fontLoader = new FontLoader();
-        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader();
-        this.loaders.audioLoader = new THREE.AudioLoader();
+        this.loaders = {
+            textureLoader: new THREE.TextureLoader(),
+            gltfLoader: new GLTFLoader(),
+            fontLoader: new FontLoader(),
+            cubeTextureLoader: new THREE.CubeTextureLoader(),
+            audioLoader: new THREE.AudioLoader(),    
+        };
     }
 
     startLoading()
@@ -61,7 +67,7 @@ export default class Resources extends EventEmitter
                     (file) =>
                     {
                         this.sourceLoaded(source, file);
-                    }
+                    },
                 );
             }
             else if(source.type === "font")
@@ -87,7 +93,7 @@ export default class Resources extends EventEmitter
                     (file) =>
                     {
                         this.sourceLoaded(source, file);
-                    }
+                    },
                 );
             }
             else if(source.type === "audio")
@@ -96,7 +102,7 @@ export default class Resources extends EventEmitter
                     src: [source.path],
                     onload: () => {
                         this.sourceLoaded(source, sound);
-                    }
+                    },
                 });
             }
             else if(source.type === "audioTex")
@@ -106,7 +112,7 @@ export default class Resources extends EventEmitter
                     (file) =>
                     {
                         this.sourceLoaded(source, file);
-                    }
+                    },
                 );
             }
         }

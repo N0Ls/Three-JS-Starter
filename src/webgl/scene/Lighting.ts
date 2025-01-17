@@ -1,14 +1,21 @@
 import * as THREE from "three";
 import Experience from "../Experience.js";
+import Resources from "../utils/Resources.js";
+
+type EnvironmentMap = {
+    intensity: number;
+    texture: THREE.Texture;
+    updateMaterials: () => void;
+};
 
 export default class Lighting
 {
     experience: Experience;
     scene: THREE.Scene;
-    resources: any;
+    resources: Resources;
 
     sunLight: THREE.DirectionalLight;
-    environmentMap: any;
+    environmentMap: EnvironmentMap;
     
     constructor()
     {
@@ -32,10 +39,8 @@ export default class Lighting
         this.scene.add(this.sunLight);
     }
     setEnvironmentMap()
-    {
-        this.environmentMap = {};
-        this.environmentMap.intensity = 0.6;
-        this.environmentMap.texture = this.resources.items.environmentMapTexture;
+    {   
+        this.environmentMap = { intensity: 0.6, texture: this.resources.items.environmentMapTexture, updateMaterials: () => {} };
         this.environmentMap.texture.colorSpace = THREE.SRGBColorSpace;
         
         this.scene.environment = this.environmentMap.texture;

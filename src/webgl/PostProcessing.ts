@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import Camera from "./Camera.js";
+import Sizes from "./utils/Sizes.js";
 import Experience from "./Experience.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -15,9 +17,9 @@ export default class PostProcessing {
 
     experience: Experience;
     canvas: HTMLCanvasElement | null;
-    sizes: any;
+    sizes: Sizes;
     scene: THREE.Scene;
-    camera: any;
+    camera: Camera;
 
     instance: EffectComposer;
     constructor() {
@@ -49,10 +51,10 @@ export default class PostProcessing {
                 tDiffuse: { value: null },
                 color1: { value: new THREE.Color("hsl(228, 100%, 50%)") },
                 color2: { value: new THREE.Color("hsl(173, 100%, 50%)") },
-                uTime: { value: 0 }
+                uTime: { value: 0 },
             },
             vertexShader: coloramaVertexShader,
-            fragmentShader: coloramaFragmentShader
+            fragmentShader: coloramaFragmentShader,
         };
 
         const coloramaPass = new ShaderPass(ColoramaShader);
