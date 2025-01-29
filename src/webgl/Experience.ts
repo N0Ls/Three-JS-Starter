@@ -19,7 +19,7 @@ export default class Experience {
     instance: Experience | null;
     static instance;
 
-    static getInstance () {
+    static getInstance() {
         if (!Experience.instance) {
             Experience.instance = new Experience();
         }
@@ -103,7 +103,7 @@ export default class Experience {
     }
 
     init() {
-        if(this.isDebug) {
+        if (this.isDebug) {
             this.initGUI();
             this.initStats();
         }
@@ -112,7 +112,7 @@ export default class Experience {
 
     initGUI() {
         this.gui = new dat.GUI();
-        
+
         const functionButton = {
             doSomething: () => {
                 this.onDoSomething();
@@ -125,21 +125,20 @@ export default class Experience {
     }
 
     initStats() {
-        const container = document.getElementById( "container" );
+        const container = document.getElementById("container");
 
         this.stats = new Stats({
-            logsPerSecond: 20, 
-            samplesLog: 100, 
-            samplesGraph: 10, 
-            precision: 2, 
+            logsPerSecond: 20,
+            samplesLog: 100,
+            samplesGraph: 10,
+            precision: 2,
             horizontal: true,
-            minimal: false, 
-            mode: 0, 
+            minimal: false,
+            mode: 0,
         });
-
-        container?.appendChild( this.stats.container );
-
+        console.log(this.renderer.instance?.domElement);
         this.stats.init(this.renderer.instance?.domElement);
+        container?.appendChild(this.stats.dom);
 
         this.scene.onBeforeRender = () => {
             this.stats.begin();
@@ -147,6 +146,7 @@ export default class Experience {
 
         this.scene.onAfterRender = () => {
             this.stats.end();
+            this.stats.update();
         };
     }
 
@@ -162,21 +162,17 @@ export default class Experience {
 
         this.world.destroy();
 
-        this.scene.traverse((child) =>
-        {
+        this.scene.traverse((child) => {
             // Test if it's a mesh
-            if(child instanceof THREE.Mesh)
-            {
+            if (child instanceof THREE.Mesh) {
                 child.geometry.dispose();
 
                 // Loop through the material properties
-                for(const key in child.material)
-                {
+                for (const key in child.material) {
                     const value = child.material[key];
 
                     // Test if there is a dispose function
-                    if(value && typeof value.dispose === "function")
-                    {
+                    if (value && typeof value.dispose === "function") {
                         value.dispose();
                     }
                 }
@@ -188,8 +184,8 @@ export default class Experience {
         this.audioEngine.destroy();
         this.audioAnalyser.destroy();
 
-        if(this.isDebug) {
-            if(this.gui)
+        if (this.isDebug) {
+            if (this.gui)
                 this.gui.destroy();
         }
     }

@@ -22,7 +22,7 @@ export default class NameText {
     material: THREE.ShaderMaterial;
     mesh: THREE.Mesh;
     textShader: { uniforms: { tAlphaTexture: { value: any; }; uColor: { value: THREE.Color; }; }; depthWrite: boolean; transparent: boolean; vertexShader: string; fragmentShader: string; };
-    
+
     constructor() {
         this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
@@ -42,14 +42,14 @@ export default class NameText {
         this.setMesh();
 
         const isDebug = true;
-        if(isDebug) {
+        if (isDebug) {
             this.setGUI();
         }
     }
 
     setGeometry(name) {
         let textName = name;
-        if(!name) textName = "Hello World";
+        if (!name) textName = "Hello World";
         this.font = this.resources.items.nameFont;
         const capitalizedName = textName.toString().toUpperCase();
 
@@ -69,7 +69,7 @@ export default class NameText {
                 curveSegments: 12,
             },
         );
-        this.geometry.center(); 
+        this.geometry.center();
     }
 
     setTextures() {
@@ -79,10 +79,10 @@ export default class NameText {
         const alphaTexture = this.resources.items.textAlphaTexture;
         this.textShader = {
             uniforms:
-        {
-            tAlphaTexture: { value: alphaTexture },
-            uColor : { value: new THREE.Color(0x2e2723).convertLinearToSRGB() },
-        },
+            {
+                tAlphaTexture: { value: alphaTexture },
+                uColor: { value: new THREE.Color(0x2e2723).convertLinearToSRGB() },
+            },
             //blending:THREE.AdditiveBlending,
             depthWrite: false,
             transparent: true,
@@ -111,53 +111,53 @@ export default class NameText {
 
     getSize(nbOfLetters) {
         switch (nbOfLetters) {
-        case 6:
-            return 0.2;
-        case 7:
-            return 0.19;
-        case 8:
-            return 0.17;
-        case 9:
-            return 0.156;
-        case 10:
-            return 0.14;
-        case 11:
-            return 0.13;
-        case 12:
-            return 0.12;
-        case 13:
-            return 0.11;
-        case 14:
-            return 0.1;
-        case 15:
-            return 0.1;
-        default:
-            return 0.2;
+            case 6:
+                return 0.2;
+            case 7:
+                return 0.19;
+            case 8:
+                return 0.17;
+            case 9:
+                return 0.156;
+            case 10:
+                return 0.14;
+            case 11:
+                return 0.13;
+            case 12:
+                return 0.12;
+            case 13:
+                return 0.11;
+            case 14:
+                return 0.1;
+            case 15:
+                return 0.1;
+            default:
+                return 0.2;
         }
     }
 
     getSizeFactor(nbOfLargeLetters) {
         switch (nbOfLargeLetters) {
-        case 1:
-            return 0.98;
-        case 2:
-            return 0.97;
-        case 3:
-            return 0.95;
-        case 4:
-            return 0.9;
-        case 5:
-            return 0.9;
-        case 6:
-            return 0.85;
-        case 7:
-            return 0.8;
-        case 8:
-            return 0.75;
-        case 9:
-            return 0.75;
-        default:
-            return 0.75;
+            case 1:
+                return 0.98;
+            case 2:
+                return 0.97;
+            case 3:
+                return 0.95;
+            case 4:
+                return 0.9;
+            case 5:
+                return 0.9;
+            case 6:
+                return 0.85;
+            case 7:
+                return 0.8;
+            case 8:
+                return 0.75;
+            case 9:
+                return 0.75;
+            default:
+                return 0.75;
         }
     }
 }
