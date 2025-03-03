@@ -136,7 +136,7 @@ export default class Experience {
             minimal: false,
             mode: 0,
         });
-        console.log(this.renderer.instance?.domElement);
+        // console.log(this.renderer.instance?.domElement);
         this.stats.init(this.renderer.instance?.domElement);
         container?.appendChild(this.stats.dom);
 
