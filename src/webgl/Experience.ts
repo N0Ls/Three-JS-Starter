@@ -1,7 +1,5 @@
-import * as THREE from "three";
-import * as dat from "lil-gui";
 import Stats from "stats-gl";
-
+import * as THREE from "three";
 
 import World from "./World.js";
 import Camera from "./Camera.js";
@@ -11,9 +9,11 @@ import Renderer from "./Renderer.js";
 import Resources from "./utils/Resources.js";
 // import PostProcessing from "./PostProcessing.js";
 
+import { Pane } from "tweakpane";
 import sources from "./sources.js";
 import AudioEngine from "./AudioEngine.js";
 import AudioAnalyser from "./AudioAnalyser.js";
+import { ButtonApi, TpMouseEvent } from "@tweakpane/core";
 
 export default class Experience {
     instance: Experience | null;
@@ -40,7 +40,7 @@ export default class Experience {
     audioEngine: AudioEngine;
     audioAnalyser: AudioAnalyser;
 
-    gui: dat.GUI;
+    gui: Pane;
     stats: Stats;
 
     // postProcessing: PostProcessing;
@@ -111,16 +111,12 @@ export default class Experience {
     }
 
     initGUI() {
-        this.gui = new dat.GUI();
+        this.gui = new Pane();
 
-        const functionButton = {
-            doSomething: () => {
-                this.onDoSomething();
-            },
+        const functionButton = (ev: TpMouseEvent<ButtonApi>) => {
+            this.onDoSomething();
         };
-        this.gui.add(functionButton, "doSomething").name("Function Button");
-
-        this.gui.close();
+        this.gui.addButton({ title: "Function Button" }).on("click", functionButton);
 
     }
 
@@ -186,7 +182,7 @@ export default class Experience {
 
         if (this.isDebug) {
             if (this.gui)
-                this.gui.destroy();
+                this.gui.dispose();
         }
     }
 

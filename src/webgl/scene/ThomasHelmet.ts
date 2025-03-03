@@ -1,12 +1,11 @@
-import GUI from "lil-gui";
 import * as THREE from "three";
+import { Pane } from "tweakpane";
 import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
 import Resources from "../utils/Resources.js";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-export default class ThomasHelmet
-{
+export default class ThomasHelmet {
     experience: Experience;
     scene: THREE.Scene;
     resources: Resources;
@@ -14,14 +13,13 @@ export default class ThomasHelmet
     sizes: Sizes;
 
     audioData: Uint8Array;
-    audioParams: { audioIndex: number };
-    audioIndex : number = 0;
+    audioParams: { audioIndex: number; };
+    audioIndex: number = 0;
 
-    gui: GUI;
+    gui: Pane;
 
     model: THREE.Object3D;
-    constructor()
-    {
+    constructor() {
         this.experience = Experience.getInstance();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
@@ -35,32 +33,30 @@ export default class ThomasHelmet
 
     }
 
-    init(){
+    init() {
         this.setModel();
         this.setGUI();
         this.audioData = this.experience.audioAnalyser.audioData;
     }
 
     setGUI() {
-        this.gui.add(this.audioParams, "audioIndex").min(0).max((this.experience.audioAnalyser.fftSize / 2.0) - 1).step(1).name("Audio Index");
+        this.gui.addBinding(this.audioParams, "audioIndex", { min: 0, max: (this.experience.audioAnalyser.fftSize / 2.0) - 1, step: 1 });
     }
 
-    setModel()
-    {
+    setModel() {
         this.model = this.resource.scene;
         this.model.scale.set(0.5, 0.5, 0.5);
         this.model.rotation.y = Math.PI;
         this.scene.add(this.model);
     }
 
-    update()
-    {
+    update() {
         this.model.rotation.y += 0.01;
         this.audioData = this.experience.audioAnalyser.audioData;
 
         let bass = this.audioData[this.audioParams.audioIndex] / 255;
         bass = Math.max(bass, 0.2);
-        this.model.scale.set( 
+        this.model.scale.set(
             0.1 + bass,
             0.1 + bass,
             0.1 + bass,

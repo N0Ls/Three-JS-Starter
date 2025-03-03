@@ -1,5 +1,5 @@
-import GUI from "lil-gui";
 import * as THREE from "three";
+import { Pane } from "tweakpane";
 import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
 import Resources from "../utils/Resources.js";
@@ -13,7 +13,7 @@ export default class NameText {
     scene: THREE.Scene;
     resources: Resources;
     sizes: Sizes;
-    gui: GUI;
+    gui: Pane;
 
     params: { threeTextColor: THREE.Color; };
 
@@ -103,10 +103,13 @@ export default class NameText {
     }
 
     setGUI() {
-        this.gui.addColor(this.params, "threeTextColor").onChange(() => {
-            this.material.uniforms.uColor.value.set(this.params.threeTextColor);
+        const PARAMS = {
+            threeTextColor: { r: 255, g: 0, b: 55 },
+        };
+        this.gui.addBinding(PARAMS, "threeTextColor").on("change", (value) => {
+            this.material.uniforms.uColor.value.set(value.value.r / 255, value.value.g / 255, value.value.b / 255);
         });
-        this.gui.add(this.mesh.position, "y").min(-1.6).max(-1.4).step(0.0001).name("nameTextY");
+        this.gui.addBinding(this.mesh.position, "y", { min: -1.6, max: -1, step: 0.0001 });
     }
 
     getSize(nbOfLetters) {
