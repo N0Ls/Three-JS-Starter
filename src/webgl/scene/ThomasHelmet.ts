@@ -1,9 +1,9 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";;
 import { Pane } from "tweakpane";
 import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
 import Resources from "../utils/Resources.js";
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { GLTF } from "three/addons/loaders/GLTFLoader.js";
 
 export default class ThomasHelmet {
     experience: Experience;

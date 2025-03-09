@@ -1,11 +1,10 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";;
 import Experience from "./Experience.js";
 import Lighting from "./scene/Lighting.js";
 import NameText from "./scene/NameText.js";
 import Resources from "./utils/Resources.js";
 import ImagePlane from "./scene/ImagePlane.js";
 import ThomasHelmet from "./scene/ThomasHelmet.js";
-import AudioSpectrum from "./scene/AudioSpectrum.js";
 
 export default class World {
     experience: Experience;
@@ -18,7 +17,6 @@ export default class World {
     thomasHelmet: ThomasHelmet;
     nameText: NameText;
     lighting: Lighting;
-    audioSpectrum: AudioSpectrum;
 
     constructor() {
         this.experience = Experience.getInstance();
@@ -29,9 +27,8 @@ export default class World {
         // Wait for resources
         this.resources.on("ready", () => {
             this.imagePlane = new ImagePlane();
-            this.nameText = new NameText();
+            // this.nameText = new NameText();
             this.lighting = new Lighting();
-            this.audioSpectrum = new AudioSpectrum();
             this.thomasHelmet = new ThomasHelmet();
 
             this.init();
@@ -40,14 +37,12 @@ export default class World {
 
     init() {
         this.imagePlane.init();
-        this.nameText.init("Hello, I'm Thomas.");
-        this.audioSpectrum.init();
+        // this.nameText.init("Hello, I'm Thomas.");
         this.thomasHelmet.init();
     }
 
     update() {
-        if(this.audioSpectrum) this.audioSpectrum.update();
-        if(this.thomasHelmet) this.thomasHelmet.update();
+        if (this.thomasHelmet) this.thomasHelmet.update();
     }
 
     destroy() {

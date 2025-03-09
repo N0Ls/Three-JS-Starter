@@ -1,9 +1,9 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";
 import { Pane } from "tweakpane";
 import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
 import Resources from "../utils/Resources.js";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 
 import textVertexShader from "../shaders/text/text.vert";
 import textFragmentShader from "../shaders/text/text.frag";
@@ -19,7 +19,7 @@ export default class NameText {
 
     font: any;
     geometry: TextGeometry;
-    material: THREE.ShaderMaterial;
+    material: THREE.MeshBasicNodeMaterial;
     mesh: THREE.Mesh;
     textShader: { uniforms: { tAlphaTexture: { value: any; }; uColor: { value: THREE.Color; }; }; depthWrite: boolean; transparent: boolean; vertexShader: string; fragmentShader: string; };
 
@@ -77,6 +77,12 @@ export default class NameText {
 
     setMaterial() {
         const alphaTexture = this.resources.items.textAlphaTexture;
+        const tAlphaTexture = new THREE.TextureNode(alphaTexture);
+        const uColor = new THREE.UniformNode(new THREE.Color(0x2e2723).convertLinearToSRGB());
+
+        const vertexShader = new THREE.FunctionNode(textVertexShader);
+        const fragmentShader = new THREE.FunctionNode(textFragmentShader);
+
         this.textShader = {
             uniforms:
             {
@@ -90,7 +96,13 @@ export default class NameText {
             fragmentShader: textFragmentShader,
         };
 
-        this.material = new THREE.ShaderMaterial(this.textShader);
+        this.material = new THREE.MeshBasicNodeMaterial({
+            side: THREE.DoubleSide,
+            depthWrite: false,
+            transparent: true,
+        });
+        this.material.colorNode = uColor;
+        this.material.opacityNode = tAlphaTexture;
     }
 
     setMesh() {
@@ -107,7 +119,8 @@ export default class NameText {
             threeTextColor: { r: 255, g: 0, b: 55 },
         };
         this.gui.addBinding(PARAMS, "threeTextColor").on("change", (value) => {
-            this.material.uniforms.uColor.value.set(value.value.r / 255, value.value.g / 255, value.value.b / 255);
+            const uColor = new THREE.UniformNode(new THREE.Color(value.value.r / 255, value.value.g / 255, value.value.b / 255));
+            this.material.colorNode = uColor;
         });
         this.gui.addBinding(this.mesh.position, "y", { min: -1.6, max: -1, step: 0.0001 });
     }

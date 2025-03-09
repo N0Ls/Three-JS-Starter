@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";
 import Camera from "./Camera.js";
 import Sizes from "./utils/Sizes.js";
 import Experience from "./Experience.js";
@@ -10,7 +10,7 @@ export default class Renderer {
     scene: THREE.Scene;
     camera: Camera;
 
-    instance: THREE.WebGLRenderer;
+    instance: THREE.WebGPURenderer;
     constructor() {
         this.experience = Experience.getInstance();
         this.canvas = this.experience.canvas;
@@ -22,9 +22,11 @@ export default class Renderer {
     }
 
     setInstance() {
-        this.instance = new THREE.WebGLRenderer({
+
+        this.instance = new THREE.WebGPURenderer({
             canvas: this.canvas!,
             antialias: true,
+            forceWebGL: false,
         });
 
         this.instance.outputColorSpace = THREE.SRGBColorSpace;
@@ -42,7 +44,7 @@ export default class Renderer {
     }
 
     update() {
-        this.instance.render(this.scene, this.camera.instance);
+        this.instance.renderAsync(this.scene, this.camera.instance);
     }
 
     destroy() {

@@ -1,5 +1,4 @@
-import Stats from "stats-gl";
-import * as THREE from "three";
+import * as THREE from "three/webgpu";;
 
 import World from "./World.js";
 import Camera from "./Camera.js";
@@ -105,7 +104,6 @@ export default class Experience {
     init() {
         if (this.isDebug) {
             this.initGUI();
-            this.initStats();
         }
         this.audioAnalyser.init();
     }
@@ -118,32 +116,6 @@ export default class Experience {
         };
         this.gui.addButton({ title: "Function Button" }).on("click", functionButton);
 
-    }
-
-    initStats() {
-        const container = document.getElementById("container");
-
-        this.stats = new Stats({
-            logsPerSecond: 20,
-            samplesLog: 100,
-            samplesGraph: 10,
-            precision: 2,
-            horizontal: true,
-            minimal: false,
-            mode: 0,
-        });
-        // console.log(this.renderer.instance?.domElement);
-        this.stats.init(this.renderer.instance?.domElement);
-        container?.appendChild(this.stats.dom);
-
-        this.scene.onBeforeRender = () => {
-            this.stats.begin();
-        };
-
-        this.scene.onAfterRender = () => {
-            this.stats.end();
-            this.stats.update();
-        };
     }
 
     onDoSomething() {

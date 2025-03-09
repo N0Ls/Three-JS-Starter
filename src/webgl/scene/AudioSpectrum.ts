@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";;
 import Sizes from "../utils/Sizes.js";
 import Experience from "../Experience.js";
 import Resources from "../utils/Resources.js";
@@ -7,8 +7,7 @@ import AudioAnalyser from "../AudioAnalyser.js";
 import basicVertexShader from "../shaders/basic/basic.vert";
 import audioDataFragmentShader from "../shaders/audioData/audioData.frag";
 
-export default class AudioData
-{
+export default class AudioData {
     experience: Experience;
     scene: THREE.Scene;
     resources: Resources;
@@ -21,9 +20,8 @@ export default class AudioData
 
     audioFile: any;
     audioAnalyser: AudioAnalyser;
-    
-    constructor()
-    {
+
+    constructor() {
         this.experience = Experience.getInstance();
         this.audioAnalyser = this.experience.audioAnalyser;
         this.scene = this.experience.scene;
@@ -34,26 +32,24 @@ export default class AudioData
 
     }
 
-    init(){
+    init() {
         this.setGeometry();
         this.setMaterial();
         this.setMesh();
     }
 
-    setGeometry()
-    {
+    setGeometry() {
         //Basic plane
         this.geometry = new THREE.PlaneGeometry(8, 4, 1, 1);
     }
 
-    setMaterial()
-    {
+    setMaterial() {
         //Check webgl 2 compatibility
-        const format = ( this.experience.renderer.instance.capabilities.isWebGL2 ) ? THREE.RedFormat : THREE.LuminanceFormat;
+        const format = (this.experience.renderer.instance.capabilities.isWebGL2) ? THREE.RedFormat : THREE.LuminanceFormat;
 
         // Uniforms object
         const uniforms = {
-            tAudioData: { value: new THREE.DataTexture(this.audioAnalyser.audioData, this.audioAnalyser.displayRes / 2, 1, format ) },
+            tAudioData: { value: new THREE.DataTexture(this.audioAnalyser.audioData, this.audioAnalyser.displayRes / 2, 1, format) },
         };
 
         this.material = new THREE.ShaderMaterial({
@@ -65,16 +61,14 @@ export default class AudioData
         this.material.needsUpdate = true;
     }
 
-    setMesh()
-    {
+    setMesh() {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.mesh.position.set(0, 0, -2);
         this.scene.add(this.mesh);
     }
 
 
-    update()
-    {
+    update() {
         this.material.uniforms.tAudioData.value.image.data = this.audioAnalyser.audioData;
         this.material.uniforms.tAudioData.value.needsUpdate = true;
     }

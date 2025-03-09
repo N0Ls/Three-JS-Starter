@@ -1,12 +1,11 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";;
 import EventEmitter from "./EventEmitter.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Howl } from "howler";
 
-export default class Resources extends EventEmitter
-{
-    sources: { type: string, path: string, name: string }[];
+export default class Resources extends EventEmitter {
+    sources: { type: string, path: string, name: string; }[];
     items: any;
     toLoad: number;
     loaded: number;
@@ -15,11 +14,10 @@ export default class Resources extends EventEmitter
         gltfLoader: GLTFLoader,
         fontLoader: FontLoader,
         cubeTextureLoader: THREE.CubeTextureLoader,
-        audioLoader: THREE.AudioLoader
+        audioLoader: THREE.AudioLoader;
     };
-    
-    constructor(sources)
-    {
+
+    constructor(sources) {
         super();
 
         // Options
@@ -34,48 +32,39 @@ export default class Resources extends EventEmitter
         this.startLoading();
     }
 
-    setLoaders()
-    {
+    setLoaders() {
         this.loaders = {
             textureLoader: new THREE.TextureLoader(),
             gltfLoader: new GLTFLoader(),
             fontLoader: new FontLoader(),
             cubeTextureLoader: new THREE.CubeTextureLoader(),
-            audioLoader: new THREE.AudioLoader(),    
+            audioLoader: new THREE.AudioLoader(),
         };
     }
 
-    startLoading()
-    {
+    startLoading() {
         // Load each source
-        for(const source of this.sources)
-        {
-            if(source.type === "texture")
-            {
+        for (const source of this.sources) {
+            if (source.type === "texture") {
                 this.loaders.textureLoader.load(
                     source.path,
-                    (file) =>
-                    {
+                    (file) => {
                         this.sourceLoaded(source, file);
                     },
                 );
             }
-            else if(source.type === "gltfModel")
-            {
+            else if (source.type === "gltfModel") {
                 this.loaders.gltfLoader.load(
                     source.path,
-                    (file) =>
-                    {
+                    (file) => {
                         this.sourceLoaded(source, file);
                     },
                 );
             }
-            else if(source.type === "font")
-            {
+            else if (source.type === "font") {
                 this.loaders.fontLoader.load(
                     source.path,
-                    (file) =>
-                    {
+                    (file) => {
                         this.sourceLoaded(source, file);
                     },
                     // ( xhr ) => {
@@ -86,18 +75,15 @@ export default class Resources extends EventEmitter
                     // }
                 );
             }
-            else if(source.type === "cubeTexture")
-            {
+            else if (source.type === "cubeTexture") {
                 this.loaders.cubeTextureLoader.load(
                     source.path,
-                    (file) =>
-                    {
+                    (file) => {
                         this.sourceLoaded(source, file);
                     },
                 );
             }
-            else if(source.type === "audio")
-            {
+            else if (source.type === "audio") {
                 const sound = new Howl({
                     src: [source.path],
                     onload: () => {
@@ -105,12 +91,10 @@ export default class Resources extends EventEmitter
                     },
                 });
             }
-            else if(source.type === "audioTex")
-            {
+            else if (source.type === "audioTex") {
                 this.loaders.audioLoader.load(
                     source.path,
-                    (file) =>
-                    {
+                    (file) => {
                         this.sourceLoaded(source, file);
                     },
                 );
@@ -118,14 +102,12 @@ export default class Resources extends EventEmitter
         }
     }
 
-    sourceLoaded(source, file)
-    {
+    sourceLoaded(source, file) {
         this.items[source.name] = file;
 
         this.loaded++;
 
-        if(this.loaded === this.toLoad)
-        {
+        if (this.loaded === this.toLoad) {
             this.trigger("ready");
         }
     }

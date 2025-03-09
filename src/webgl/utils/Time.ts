@@ -1,14 +1,12 @@
 import EventEmitter from "./EventEmitter.js";
 
-export default class Time extends EventEmitter
-{
+export default class Time extends EventEmitter {
     start: number;
     current: number;
     elapsed: number;
     delta: number;
-    
-    constructor()
-    {
+
+    constructor() {
         super();
 
         // Setup
@@ -16,15 +14,13 @@ export default class Time extends EventEmitter
         this.current = this.start;
         this.elapsed = 0;
         this.delta = 16;
-        
-        window.requestAnimationFrame(() =>
-        {
+
+        window.requestAnimationFrame(() => {
             this.tick();
         });
     }
 
-    tick()
-    {
+    tick() {
         const currentTime = Date.now();
         this.delta = currentTime - this.current;
         this.current = currentTime;
@@ -32,8 +28,7 @@ export default class Time extends EventEmitter
 
         this.trigger("tick");
 
-        window.requestAnimationFrame(() =>
-        {
+        window.requestAnimationFrame(() => {
             this.tick();
         });
     }

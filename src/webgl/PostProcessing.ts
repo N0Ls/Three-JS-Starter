@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "three/webgpu";;
 import Camera from "./Camera.js";
 import Sizes from "./utils/Sizes.js";
 import Experience from "./Experience.js";
@@ -84,7 +84,7 @@ export default class PostProcessing {
     }
 
     update() {
-        this.instance.render(); 
+        this.instance.render();
     }
 
     destroy() {

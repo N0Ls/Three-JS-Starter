@@ -1,4 +1,5 @@
 import glsl from "vite-plugin-glsl";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 export default {
     root: "src/",
@@ -18,8 +19,4 @@ export default {
         emptyOutDir: true,
         sourcemap: true,
     },
-    plugins:
-    [
-        glsl(),
-    ],
 };
