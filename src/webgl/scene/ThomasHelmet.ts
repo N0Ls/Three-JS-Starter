@@ -35,7 +35,7 @@ export default class ThomasHelmet {
 
     init() {
         this.setModel();
-        this.setGUI();
+        if (this.experience.isDebug) this.setGUI();
         this.audioData = this.experience.audioAnalyser.audioData;
     }
 

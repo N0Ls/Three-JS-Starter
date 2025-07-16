@@ -8,6 +8,7 @@ import Renderer from "./Renderer.js";
 import Resources from "./utils/Resources.js";
 // import PostProcessing from "./PostProcessing.js";
 
+import Stats from "stats-gl";
 import { Pane } from "tweakpane";
 import sources from "./sources.js";
 import AudioEngine from "./AudioEngine.js";
@@ -54,7 +55,7 @@ export default class Experience {
         // @ts-expect-error Singleton
         window.experience = this;
 
-        this.isDebug = true;
+        this.isDebug = window.location.pathname.endsWith("/dev");
 
         // Variables
         const canvas = document.querySelector("canvas");
@@ -104,6 +105,7 @@ export default class Experience {
     init() {
         if (this.isDebug) {
             this.initGUI();
+            this.initStats();
         }
         this.audioAnalyser.init();
     }
@@ -117,6 +119,37 @@ export default class Experience {
         this.gui.addButton({ title: "Function Button" }).on("click", functionButton);
 
     }
+
+
+    initStats() {
+        const container = document.getElementById("container");
+
+        this.stats = new Stats({
+            trackGPU: true,
+            trackHz: true,
+            trackCPT: false,
+            logsPerSecond: 5,
+            graphsPerSecond: 30,
+            samplesLog: 40,
+            samplesGraph: 10,
+            precision: 2,
+            horizontal: true,
+            minimal: false,
+            mode: 0,
+        });
+        this.stats.init(this.renderer.instance?.domElement);
+        container?.appendChild(this.stats.dom);
+
+        this.scene.onBeforeRender = () => {
+            this.stats.begin();
+        };
+
+        this.scene.onAfterRender = () => {
+            this.stats.end();
+            this.stats.update();
+        };
+    }
+
 
     onDoSomething() {
         console.log("Do something");
