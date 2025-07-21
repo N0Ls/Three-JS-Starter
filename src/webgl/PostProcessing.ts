@@ -1,17 +1,16 @@
-import * as THREE from "three/webgpu";;
+import * as THREE from "three/webgpu";
+
 import Camera from "./Camera.js";
 import Sizes from "./utils/Sizes.js";
-import Experience from "./Experience.js";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader.js";
+import ColoramaNode, { colorama } from "./tsl/ColoramaNode.js";
+import { bloom } from "three/addons/tsl/display/BloomNode.js";
+import Experience from "./Experience.js"; import { pass, renderOutput } from "three/tsl";
 
-import coloramaVertexShader from "./shaders/colorama/vertex.glsl";
-import coloramaFragmentShader from "./shaders/colorama/fragment.glsl";
 
-import dotScreenVertexShader from "./shaders/dotScreen/dotScreen.vert";
-import dotScreenFragmentShader from "./shaders/dotScreen/dotScreen.frag";
+const COLORAMA_PARAMS = {
+    color1: { r: 1.0, g: 1.0, b: 0.0 },
+    color2: { r: 1.0, g: 0.0, b: 0.0 },
+};
 
 export default class PostProcessing {
 
@@ -21,7 +20,9 @@ export default class PostProcessing {
     scene: THREE.Scene;
     camera: Camera;
 
-    instance: EffectComposer;
+    instance: THREE.PostProcessing;
+    coloramaPass: ColoramaNode;
+
     constructor() {
         this.experience = Experience.getInstance();
         this.canvas = this.experience.canvas;
@@ -33,54 +34,41 @@ export default class PostProcessing {
     }
 
     setInstance() {
+        const scenePass = pass(this.experience.scene, this.experience.camera.instance);
+        const scenePassColor = renderOutput(scenePass);
+        const bloomPass = bloom(scenePassColor);
 
-        this.instance = new EffectComposer(this.experience.renderer.instance);
-        this.instance.setSize(this.sizes.width, this.sizes.height);
-        this.instance.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.coloramaPass = colorama(scenePassColor, new THREE.Color(COLORAMA_PARAMS.color1.r, COLORAMA_PARAMS.color1.g, COLORAMA_PARAMS.color1.b), new THREE.Color(COLORAMA_PARAMS.color2.r, COLORAMA_PARAMS.color2.g, COLORAMA_PARAMS.color2.b));
 
-        const renderPass = new RenderPass(this.scene, this.camera.instance);
-        this.instance.addPass(renderPass);
+        this.instance = new THREE.PostProcessing(this.experience.renderer.instance);
+        //this.instance.outputNode = scenePassColor.add(bloomPass);
+        this.instance.outputNode = this.coloramaPass;
+    }
 
-        const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
-        gammaCorrectionPass.enabled = false;
-        this.instance.addPass(gammaCorrectionPass);
+    initGUI() {
+        const folder = this.experience.gui.addFolder({ title: "Post Processing" });
+        folder.addBinding(COLORAMA_PARAMS, "color1", {
+            color: { type: "float" },
+        }).on("change", () => {
+            this.coloramaPass.color1.value = new THREE.Color(
+                COLORAMA_PARAMS.color1.r,
+                COLORAMA_PARAMS.color1.g,
+                COLORAMA_PARAMS.color1.b,
+            );
+        });
 
-        const ColoramaShader = {
-            uniforms:
-            {
-                tDiffuse: { value: null },
-                color1: { value: new THREE.Color("hsl(228, 100%, 50%)") },
-                color2: { value: new THREE.Color("hsl(173, 100%, 50%)") },
-                uTime: { value: 0 },
-            },
-            vertexShader: coloramaVertexShader,
-            fragmentShader: coloramaFragmentShader,
-        };
-
-        const coloramaPass = new ShaderPass(ColoramaShader);
-        coloramaPass.enabled = true;
-        this.instance.addPass(coloramaPass);
-
-        const dotScreenShader = {
-            uniforms: {
-                tDiffuse: { value: null },
-                tSize: { value: new THREE.Vector2(256, 256) },
-                center: { value: new THREE.Vector2(0.5, 0.5) },
-                angle: { value: 1.57 },
-                scale: { value: 1.0 },
-            },
-            vertexShader: dotScreenVertexShader,
-            fragmentShader: dotScreenFragmentShader,
-        };
-
-        const dotScreenPass = new ShaderPass(dotScreenShader);
-        dotScreenPass.enabled = true;
-        this.instance.addPass(dotScreenPass);
+        folder.addBinding(COLORAMA_PARAMS, "color2", {
+            color: { type: "float" },
+        }).on("change", () => {
+            this.coloramaPass.color2.value = new THREE.Color(
+                COLORAMA_PARAMS.color2.r,
+                COLORAMA_PARAMS.color2.g,
+                COLORAMA_PARAMS.color2.b,
+            );
+        });
     }
 
     resize() {
-        this.instance.setSize(this.sizes.width, this.sizes.height);
-        this.instance.setPixelRatio(this.sizes.pixelRatio);
     }
 
     update() {
@@ -88,6 +76,5 @@ export default class PostProcessing {
     }
 
     destroy() {
-        this.instance.dispose();
     }
 }

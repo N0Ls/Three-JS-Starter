@@ -14,6 +14,7 @@ import sources from "./sources.js";
 import AudioEngine from "./AudioEngine.js";
 import AudioAnalyser from "./AudioAnalyser.js";
 import { ButtonApi, TpMouseEvent } from "@tweakpane/core";
+import PostProcessing from "./PostProcessing.js";
 
 export default class Experience {
     instance: Experience | null;
@@ -43,7 +44,7 @@ export default class Experience {
     gui: Pane;
     stats: Stats;
 
-    // postProcessing: PostProcessing;
+    postProcessing: PostProcessing;
 
     constructor() {
         // Singleton
@@ -66,7 +67,7 @@ export default class Experience {
         this.scene = new THREE.Scene();
         this.camera = new Camera();
         this.renderer = new Renderer();
-        // this.postProcessing = new PostProcessing();
+        this.postProcessing = new PostProcessing();
 
         this.resources = new Resources(sources);
 
@@ -99,7 +100,7 @@ export default class Experience {
         this.renderer.update();
         this.world.update();
         this.audioAnalyser.update();
-        //this.postProcessing.update();
+        this.postProcessing.update();
     }
 
     init() {
@@ -118,6 +119,7 @@ export default class Experience {
         };
         this.gui.addButton({ title: "Function Button" }).on("click", functionButton);
 
+        this.postProcessing.initGUI();
     }
 
 
@@ -137,7 +139,7 @@ export default class Experience {
             minimal: false,
             mode: 0,
         });
-        this.stats.init(this.renderer.instance?.domElement);
+        this.stats.init(this.renderer.instance);
         container?.appendChild(this.stats.dom);
 
         this.scene.onBeforeRender = () => {
